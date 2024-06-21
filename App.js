@@ -1,35 +1,34 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { BASE_URL, API_KEY } from './src/constant'
-import { View, StyleSheet, ActivityIndicator } from 'react-native'
+import { View, StyleSheet, ActivityIndicator, Text } from 'react-native'
 import WeatherSearch from './src/components/weatherSearch'
 import WeatherInfo from './src/components/weatherInfo'
 
 const App = () => {
   const [weatherData, setWeatherData] = useState()
 
-  // definisikan state status 
+  // // definisikan state status 
   const [status, setStatus] = useState('')
 
   const renderComponent = () => {
     switch (status) {
       case 'loading':
-        return <ActivityIndicator size="large" />
+        return <ActivityIndicator size="large" />;
       case 'success':
-        return <WeatherInfo weatherData={weatherData} />
+        return <WeatherInfo weatherData={weatherData} />;
       case 'error':
         return (
-          <Text style={styles.errorStatus}>
+          <Text style={styles.errorStatus} >
             Something went wrong. Please try again with a correct city name.
           </Text>
-        )
+        );
       default:
-        return
+        return;
     }
-  }
+  };
   
   const searchWeather = (location) => {
-    // Mengatur status ke "loading"
     setStatus('loading')
     axios
       .get(`${BASE_URL}?q=${location}&appid=${API_KEY}`)
@@ -38,13 +37,12 @@ const App = () => {
         data.visibility /= 1000
         data.visibility = data.visibility.toFixed(2)
         data.main.temp -= 273.15
-        data.main.temp = Math.round(data.main.temp);
+        data.main.temp = data.main.temp.toFixed(2)
         setWeatherData(data)
-        // Mengatur status ke "success"
+
         setStatus('success')
       })
       .catch((error) => {
-        // Mengatur status ke "error"
         setStatus('error')
       })
   }
@@ -52,10 +50,7 @@ const App = () => {
   return (
     <View style={styles.container}>
       <WeatherSearch searchWeather={searchWeather} />
-      {weatherData && <WeatherInfo weatherData={weatherData} />}
-      <View style={styles.marginTop20}>
-        {renderComponent()}
-      </View>
+      <View style={styles.margintTop20}>{renderComponent()}</View>
     </View>
   )
 }
@@ -65,8 +60,9 @@ const styles = StyleSheet.create({
     padding: 50,
   },
   errorStatus: {
-    paddingHorizontal: 20,
-    color: "#fff",
+    paddingHorizontal: 10,
+    color: "red",
+    fontStyle: "italic",
   },
 })
 
