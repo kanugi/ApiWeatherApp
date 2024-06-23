@@ -23,6 +23,18 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "3553c513-465f-4c83-9398-02160cbe46ab"
+      }
+    },
+    "owner": "kanugi",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/3553c513-465f-4c83-9398-02160cbe46ab"
     }
   }
 }
